@@ -124,7 +124,7 @@ for epoch in range(args.max_epochs):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        train_loss += loss.data[0]
+        train_loss += loss.item()
         if (batch_idx +1) % args.print_every == 0 : 
             deno = args.print_every * args.batch_size * np.prod(obs) * np.log(2.)
             writer.add_scalar('train/bpd', (train_loss / deno), writes)
@@ -147,7 +147,7 @@ for epoch in range(args.max_epochs):
         input_var = Variable(input)
         output = model(input_var)
         loss = loss_op(input_var, output)
-        test_loss += loss.data[0]
+        test_loss += loss.item()
         del loss, output
 
     deno = batch_idx * args.batch_size * np.prod(obs) * np.log(2.)
